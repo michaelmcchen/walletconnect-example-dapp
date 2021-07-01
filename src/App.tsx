@@ -1,7 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
 import WalletConnect from "@walletconnect/client";
-import QRCodeModal from "@walletconnect/qrcode-modal";
 import { convertUtf8ToHex } from "@walletconnect/utils";
 import { IInternalEvent } from "@walletconnect/types";
 import Button from "./components/Button";
@@ -165,7 +164,7 @@ class App extends React.Component<any, any> {
     const bridge = "https://bridge.walletconnect.org";
 
     // create new connector
-    const connector = new WalletConnect({ bridge, qrcodeModal: QRCodeModal });
+    const connector = new WalletConnect({ bridge });
 
     await this.setState({ connector });
 
@@ -177,6 +176,8 @@ class App extends React.Component<any, any> {
 
     // subscribe to events
     await this.subscribeToEvents();
+
+    window.open(`http://localhost:4000/?wc=${connector.uri}`, "_blank");
   };
   public subscribeToEvents = () => {
     const { connector } = this.state;
